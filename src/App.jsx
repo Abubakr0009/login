@@ -7,6 +7,9 @@
 // // import { Home } from "./pages/Home";
 // // import CardDetails from "./components/CardDetails";
 
+import Header_main from "./PhoneSait/Header_main";
+import Header from "./PhoneSait/Header_nav";
+
 // const App = () => {
 //   const isAuthenticated = () => {
 //     return localStorage.getItem("accessToken") !== null;
@@ -26,7 +29,6 @@
 //         {/* <Route path="/register" element={<Register />} /> */}
 //         <Route path="/login" element={<Login />} />
 
-      
 //         <Route
 //           path="/profile"
 //           element={
@@ -42,39 +44,65 @@
 
 // export default App;
 
+// // import {  Routes, Route, Navigate } from "react-router-dom";
+// // import Login from "./pages/Login";
+// // import Register from "./pages/Register";
+// // import Profile from "./pages/Profile";
 
-import {  Routes, Route, Navigate } from "react-router-dom";
+// function App() {
+//   // return (
+
+//   //     // <Routes>
+//   //     //   {/* Asosiy sahifa Login bo'ladi */}
+//   //     //   <Route path="/" element={<Navigate to="/login" />} />
+
+//   //     //   {/* Login sahifasi */}
+//   //     //   <Route path="/login" element={<Login />} />
+
+//   //     //   {/* Ro'yxatdan o'tish sahifasi */}
+//   //     //   <Route path="/register" element={<Register />} />
+
+//   //     //   {/* Profil sahifasi */}
+//   //     //   <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+
+//   //     //   {/* 404 sahifa */}
+//   //     //   <Route path="*" element={<h2>404 - Sahifa topilmadi</h2>} />
+//   //     // </Routes>
+
+//   // );
+// return(
+
+// )
+
+// }
+
+// // Foydalanuvchi tizimga kirganini tekshiruvchi komponent
+// // function ProtectedRoute({ children }) {
+// //   const token = localStorage.getItem("accessToken");
+// //   return token ? children : <Navigate to="/login" />;
+// // }
+
+// export default App;
+
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Header_sleder from "./PhoneSait/Header_sleder";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Profile from "./pages/Profile";
 
-function App() {
+const App = () => {
   return (
-   
+    <div>
+     <Header_main/>
+     
       <Routes>
-        {/* Asosiy sahifa Login bo'ladi */}
-        <Route path="/" element={<Navigate to="/login" />} />
         
-        {/* Login sahifasi */}
+        <Route path="/" element={<Header_sleder />} />
         <Route path="/login" element={<Login />} />
-
-        {/* Ro'yxatdan o'tish sahifasi */}
         <Route path="/register" element={<Register />} />
-
-        {/* Profil sahifasi */}
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-
-        {/* 404 sahifa */}
-        <Route path="*" element={<h2>404 - Sahifa topilmadi</h2>} />
       </Routes>
-   
+    </div>
   );
-}
-
-// Foydalanuvchi tizimga kirganini tekshiruvchi komponent
-function ProtectedRoute({ children }) {
-  const token = localStorage.getItem("accessToken");
-  return token ? children : <Navigate to="/login" />;
-}
+};
 
 export default App;
