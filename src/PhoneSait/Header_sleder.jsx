@@ -35,7 +35,6 @@ export default function HeaderSlider() {
       {slides.map((slide, index) => (
         <SwiperSlide key={index}>
           <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 p-12 w-full h-[500px]">
-            {/* Matn qismi */}
             <div className="md:w-1/2 text-left max-w-[600px] px-6">
               <h2 className="text-5xl font-bold text-gray-900">{slide.title}</h2>
               <p className="text-gray-600 mt-4 text-lg">{slide.description}</p>
@@ -44,7 +43,6 @@ export default function HeaderSlider() {
               </button>
             </div>
 
-            {/* Rasm qismi */}
             <div className="md:w-1/2 flex justify-center">
               <img
                 src={slide.image}
