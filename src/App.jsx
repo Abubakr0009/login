@@ -85,35 +85,42 @@
 
 // export default App;
 
-
 // 111111111111
 
+
+
+
 // import React from "react";
-// import { store } from "./redux/store";
 // import { useSelector } from "react-redux";
-// import { decrementAction, incrementAction } from "./redux/action";
+// import {
+//   decrement,
+//   increment,
+//   incrementByAmount,
+// } from "./redux/counterSlice";
+// import { useDispatch } from "react-redux";
 
 
 // const App = () => {
-//   const count = useSelector((state) => state.count);
-// // console.log(store.dispatch(incrementAction));
+//   const count = useSelector((state) => state.count.value);
+//   const dispatch = useDispatch();
+//   // console.log(.dispatch(incrementAction));
 
-//   console.log(store.getState());
+//   console.log(getState());
 
 //   return (
 //     <div>
-//       <button
-//         className="border"
-//         onClick={() => store.dispatch({ type: "INCREMENT" })}
-//       >
+//       <button className="border" onClick={() => dispatch(increment())}>
 //         QO`SHISH
 //       </button>
-//       <span style={{ margin: "0 10px", fontSize: "20px" }}>{count}</span> 
+//       <span style={{ margin: "0 10px", fontSize: "20px" }}>{count}</span>
+//       <button className="border" onClick={() => dispatch(decrement())}>
+//         AYIRISH
+//       </button>
 //       <button
 //         className="border"
-//         onClick={() => store.dispatch(decrementAction)}
+//         onClick={() => dispatch(incrementByAmount(10))}
 //       >
-//         AYIRISH
+//         10 ta qo`shish
 //       </button>
 //     </div>
 //   );
@@ -122,28 +129,25 @@
 // export default App;
 
 
-import { Routes, Route } from "react-router-dom";
-import Home from "../src/pages/Home";
-import PostDetails from "../src/pages/PostDetails";
 
-const App = () => {
-  return (
-    
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/post/:id" element={<PostDetails />} />
-      </Routes>
-   
-  );
-};
+// 1-dars Api
 
-export default App;
+// import { Routes, Route } from "react-router-dom";
+// import Home from "../src/pages/Home";
+// import PostDetails from "../src/pages/PostDetails";
 
+// const App = () => {
+//   return (
 
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/post/:id" element={<PostDetails />} />
+//       </Routes>
 
+//   );
+// };
 
-
-
+// export default App;
 
 // import { Routes, Route } from "react-router-dom";
 // import Header_sleder from "./PhoneSait/Header_sleder";
@@ -160,3 +164,81 @@ export default App;
         <Route path="/register" element={<Register />} />
       </Routes> */
 }
+
+
+
+import React, { useEffect, useState } from "react";
+import {  Route, Routes, Link, useParams } from "react-router-dom";
+import axios from "axios";
+
+
+const API_URL = "https://nt-devconnector.onrender.com/api/profile";
+
+const Profiles = () => {
+  const [profiles, setProfiles] = useState([]);
+
+  useEffect(() => {
+    axios.get(API_URL, { timeout: 10000 }) 
+      .then(res => setProfiles(res.data))
+      .catch(err => console.error("API xatosi:", err));
+  }, []);
+
+  return (
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Dasturchilar Ro'yxati</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {profiles.map(profile => (
+          <div key={profile._id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center">
+            <img src={profile.user.avatar} alt={profile.user.name} className="w-24 h-24 rounded-full mb-2" />
+            <h3 className="text-lg font-semibold">{profile.user.name}</h3>
+            <p className="text-gray-600 text-sm">{profile.bio?.slice(0, 50)}...</p>
+            <Link to={`/profile/${profile._id}`} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Batafsil</Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ProfileDetail = () => {
+  const { id } = useParams();
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${API_URL}/${id}`, { timeout: 10000 }) 
+      .then(res => setProfile(res.data))
+      .catch(err => console.error("API xatosi:", err));
+  }, [id]);
+
+  if (!profile) return <p className="text-center text-gray-500">Yuklanmoqda...</p>;
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
+        <img src={profile.user.avatar} alt={profile.user.name} className="w-32 h-32 rounded-full mb-4" />
+        <h2 className="text-2xl font-bold">{profile.user.name}</h2>
+        <p className="text-gray-600 mb-2">{profile.bio}</p>
+        <p className="text-gray-800"><strong>Joylashuvi:</strong> {profile.location}</p>
+        <h3 className="text-lg font-semibold mt-4">Ko'nikmalar:</h3>
+        <ul className="list-disc list-inside text-gray-700">
+          {profile.skills.map((skill, index) => (
+            <li key={index}>{skill}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+   
+      <Routes>
+        <Route path="/" element={<Profiles />} />
+        <Route path="/profile/:id" element={<ProfileDetail />} />
+      </Routes>
+  
+  );
+};
+
+export default App;
