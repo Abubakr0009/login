@@ -19,6 +19,7 @@ const PostDetails = () => {
     <div className="container">
       <h2>{post.title}</h2>
       <p>{post.text}</p>
+      <h1>dxz</h1>
     </div>
   );
 };
