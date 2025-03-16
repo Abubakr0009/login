@@ -170,6 +170,9 @@
 import React, { useEffect, useState } from "react";
 import {  Route, Routes, Link, useParams } from "react-router-dom";
 import axios from "axios";
+import Profile from "./pages/Profile";
+import { Home } from "./pages/Home";
+import AddPost from "./pages/AddPosts";
 
 
 const API_URL = "https://nt-devconnector.onrender.com/api/profile";
@@ -200,42 +203,57 @@ const Profiles = () => {
   );
 };
 
-const ProfileDetail = () => {
-  const { id } = useParams();
-  const [profile, setProfile] = useState(null);
+// const ProfileDetail = () => {
+//   const { id } = useParams();
+//   const [profile, setProfile] = useState(null);
 
-  useEffect(() => {
-    axios.get(`${API_URL}/${id}`, { timeout: 10000 }) 
-      .then(res => setProfile(res.data))
-      .catch(err => console.error("API xatosi:", err));
-  }, [id]);
+//   useEffect(() => {
+//     axios.get(`${API_URL}/${id}`, { timeout: 10000 }) 
+//       .then(res => setProfile(res.data))
+//       .catch(err => console.error("API xatosi:", err));
+//   }, [id]);
 
-  if (!profile) return <p className="text-center text-gray-500">Yuklanmoqda...</p>;
+//   if (!profile) return <p className="text-center text-gray-500">Yuklanmoqda...</p>;
 
-  return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
-        <img src={profile.user.avatar} alt={profile.user.name} className="w-32 h-32 rounded-full mb-4" />
-        <h2 className="text-2xl font-bold">{profile.user.name}</h2>
-        <p className="text-gray-600 mb-2">{profile.bio}</p>
-        <p className="text-gray-800"><strong>Joylashuvi:</strong> {profile.location}</p>
-        <h3 className="text-lg font-semibold mt-4">Ko'nikmalar:</h3>
-        <ul className="list-disc list-inside text-gray-700">
-          {profile.skills.map((skill, index) => (
-            <li key={index}>{skill}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="container mx-auto p-4">
+//       <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
+//         <img src={profile.user.avatar} alt={profile.user.name} className="w-32 h-32 rounded-full mb-4" />
+//         <h2 className="text-2xl font-bold">{profile.user.name}</h2>
+//         <p className="text-gray-600 mb-2">{profile.bio}</p>
+//         <p className="text-gray-800"><strong>Joylashuvi:</strong> {profile.location}</p>
+//         <h3 className="text-lg font-semibold mt-4">Ko'nikmalar:</h3>
+//         <ul className="list-disc list-inside text-gray-700">
+//           {profile.skills.map((skill, index) => (
+//             <li key={index}>{skill}</li>
+//           ))}
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const App = () => {
   return (
    
       <Routes>
-        <Route path="/" element={<Profiles />} />
-        <Route path="/profile/:id" element={<ProfileDetail />} />
+        <Route path="/" element={<Home/>}/>
+        {/* <Route path="/addPost" element={<AddPost/>}/> */}
+        {/* <Route path="/" element={<Profiles />} /> */}
+        <Route path="/profile/:id" element={<Profile />} />
       </Routes>
   
   );
