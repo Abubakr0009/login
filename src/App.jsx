@@ -87,9 +87,6 @@
 
 // 111111111111
 
-
-
-
 // import React from "react";
 // import { useSelector } from "react-redux";
 // import {
@@ -98,7 +95,6 @@
 //   incrementByAmount,
 // } from "./redux/counterSlice";
 // import { useDispatch } from "react-redux";
-
 
 // const App = () => {
 //   const count = useSelector((state) => state.count.value);
@@ -127,8 +123,6 @@
 // };
 
 // export default App;
-
-
 
 // 1-dars Api
 
@@ -165,50 +159,47 @@
       </Routes> */
 }
 
+// import React, { useEffect, useState } from "react";
+// import {  Route, Routes, Link, useParams } from "react-router-dom";
+// import axios from "axios";
+// import Profile from "./pages/Profile";
+// import { Home } from "./pages/Home";
+// import AddPost from "./pages/AddPosts";
 
+// const API_URL = "https://nt-devconnector.onrender.com/api/profile";
 
-import React, { useEffect, useState } from "react";
-import {  Route, Routes, Link, useParams } from "react-router-dom";
-import axios from "axios";
-import Profile from "./pages/Profile";
-import { Home } from "./pages/Home";
-import AddPost from "./pages/AddPosts";
+// const Profiles = () => {
+//   const [profiles, setProfiles] = useState([]);
 
+//   useEffect(() => {
+//     axios.get(API_URL, { timeout: 10000 })
+//       .then(res => setProfiles(res.data))
+//       .catch(err => console.error("API xatosi:", err));
+//   }, []);
 
-const API_URL = "https://nt-devconnector.onrender.com/api/profile";
-
-const Profiles = () => {
-  const [profiles, setProfiles] = useState([]);
-
-  useEffect(() => {
-    axios.get(API_URL, { timeout: 10000 }) 
-      .then(res => setProfiles(res.data))
-      .catch(err => console.error("API xatosi:", err));
-  }, []);
-
-  return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Dasturchilar Ro'yxati</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {profiles.map(profile => (
-          <div key={profile._id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center">
-            <img src={profile.user.avatar} alt={profile.user.name} className="w-24 h-24 rounded-full mb-2" />
-            <h3 className="text-lg font-semibold">{profile.user.name}</h3>
-            <p className="text-gray-600 text-sm">{profile.bio?.slice(0, 50)}...</p>
-            <Link to={`/profile/${profile._id}`} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Batafsil</Link>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+// return (
+//   <div className="container mx-auto p-4">
+//     <h2 className="text-2xl font-bold mb-4">Dasturchilar Ro'yxati</h2>
+//     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+//       {profiles.map(profile => (
+//         <div key={profile._id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center">
+//           <img src={profile.user.avatar} alt={profile.user.name} className="w-24 h-24 rounded-full mb-2" />
+//           <h3 className="text-lg font-semibold">{profile.user.name}</h3>
+//           <p className="text-gray-600 text-sm">{profile.bio?.slice(0, 50)}...</p>
+//           <Link to={`/profile/${profile._id}`} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Batafsil</Link>
+//         </div>
+//       ))}
+//     </div>
+//   </div>
+// );
+// };
 
 // const ProfileDetail = () => {
 //   const { id } = useParams();
 //   const [profile, setProfile] = useState(null);
 
 //   useEffect(() => {
-//     axios.get(`${API_URL}/${id}`, { timeout: 10000 }) 
+//     axios.get(`${API_URL}/${id}`, { timeout: 10000 })
 //       .then(res => setProfile(res.data))
 //       .catch(err => console.error("API xatosi:", err));
 //   }, [id]);
@@ -236,27 +227,54 @@ const Profiles = () => {
 
 
 
+import { Routes, Route } from "react-router-dom";
+import AddPosts from "./pages/AddPosts";
+import { Home } from "./pages/Home";
+import Discussion from "./pages/Discussion";
+import PostDetails from "./pages/PostDetails";
+import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
 
-
-
-
-
-
-
-
-
-
-const App = () => {
+function App() {
   return (
-   
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        {/* <Route path="/addPost" element={<AddPost/>}/> */}
-        {/* <Route path="/" element={<Profiles />} /> */}
-        <Route path="/profile/:id" element={<Profile />} />
-      </Routes>
-  
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/addPosts" element={<AddPosts />} />
+      <Route path="/discussion/:id" element={<Discussion />} />
+      <Route path="/posts/:id" element={<PostDetails />} />
+
+      <Route path="/login" element={<Auth isLogin={true} />} />
+      <Route path="/register" element={<Auth isLogin={false} />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
-};
+}
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const App = () => {
+//   return (
+
+//       <Routes>
+//         <Route path="/" element={<Home/>}/>
+//         {/* <Route path="/addPost" element={<AddPost/>}/> */}
+//         {/* <Route path="/" element={<Profiles />} /> */}
+//         <Route path="/profile/:id" element={<Profile />} />
+//       </Routes>
+
+//   );
+// };
+
+// export default App;
